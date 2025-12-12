@@ -60,3 +60,33 @@ key має виконатись мінімальну кількість разі
                 :key key 
                 :test test)))))
 ```
+
+### Тестові набори та утиліти першої частини
+```lisp
+(defun check-first-function (name input expected &rest sort-args)
+    (format t "~a ~:[FAILED~;passed~]~%"
+        name
+        (equal (apply #'selection-sort-functional input sort-args) expected)))
+
+(defun test-first-function ()
+    (check-first-function "[Test 1]" '(8 3 7 1 9) '(1 3 7 8 9))  
+    (check-first-function "[Test 2]" '(15 10 5) '(5 10 15)) 
+    (check-first-function "[Test 3]" '(4 4 4) '(4 4 4))
+    (check-first-function "[Test 4]" '(6 2 6 2 1) '(1 2 2 6 6))
+    (check-first-function "[Test 5]" '(100) '(100))
+    (check-first-function "[Test 6]" '(-3 7 -1 4) '(-1 -3 4 7) :key #'abs)
+    (check-first-function "[Test 7]" '(2 7 4 9 3) '(9 7 4 3 2) :test #'>))
+```
+
+### Тестування першої частини
+```lisp
+[Test 1] passed
+[Test 2] passed
+[Test 3] passed
+[Test 4] passed
+[Test 5] passed
+[Test 6] passed
+[Test 7] passed
+```
+
+## Варіант другої частини 21 (9)
