@@ -31,5 +31,32 @@ key має виконатись мінімальну кількість разі
 
 ## Лістинг реалізації першої частини завдання
 ```lisp
-;;; Лістинг реалізації
+(defun find-min-with-key (lst key test)
+    (let* ((first-elem (first lst))
+        (first-key (funcall key first-elem)))
+    (if (null (rest lst))
+        (values first-elem first-key)
+        (multiple-value-bind (rest-min rest-key) 
+            (find-min-with-key (rest lst) key test)
+            (if (funcall test first-key rest-key)
+                (values first-elem first-key)
+                (values rest-min rest-key))))))
+
+(defun remove-first-by-key (elem lst key)
+    (let ((target-key (funcall key elem)))
+    (cond
+        ((null lst) nil)
+        ((equal (funcall key (first lst)) target-key) (rest lst))
+        (t (cons (first lst) (remove-first-by-key elem (rest lst) key))))))
+
+(defun selection-sort-functional (lst &key (key #'identity) (test #'<))
+    (if (null lst)
+        nil
+        (multiple-value-bind (min-elem min-key) 
+            (find-min-with-key lst key test)
+            (cons min-elem 
+                (selection-sort-functional 
+                (remove-first-by-key min-elem lst key)
+                :key key 
+                :test test)))))
 ```
