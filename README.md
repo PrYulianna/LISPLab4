@@ -90,3 +90,31 @@ key має виконатись мінімальну кількість разі
 ```
 
 ## Варіант другої частини 21 (9)
+## Лістинг реалізації другої частини завдання
+```lisps
+(defun duplicate-elements-fn (n &key (duplicate-p (lambda (x) t)))
+    (lambda (elem)
+    (if (funcall duplicate-p elem)
+        (make-list n :initial-element elem)
+        (list elem))))
+```
+
+### Тестові набори та утиліти другої частини
+```lisp
+(defun check-second-function (name input expected)
+    (format t "~a ~:[FAILED~;passed~]~%"
+        name
+        (equal input expected)))
+
+(defun test-second-function ()
+    (check-second-function "[Test 1]" (mapcan (duplicate-elements-fn 3) '(a b)) '(a a a b b b))
+    (check-second-function "[Test 2]" (mapcan (duplicate-elements-fn 2 :duplicate-p #'oddp) '(2 3 4 5)) '(2 3 3 4 5 5))
+    (check-second-function "[Test 3]" (mapcan (duplicate-elements-fn 4 :duplicate-p #'evenp) '(1 2 3)) '(1 2 2 2 2 3)))
+```
+
+### Тестування другої частини
+```lisp
+[Test 1] passed
+[Test 2] passed
+[Test 3] passed
+```
