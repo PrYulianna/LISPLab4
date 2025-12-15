@@ -91,7 +91,7 @@ key має виконатись мінімальну кількість разі
 
 ## Варіант другої частини 21 (9)
 ## Лістинг реалізації другої частини завдання
-```lisps
+```lisp
 (defun duplicate-elements-fn (n &key (duplicate-p (lambda (x) t)))
     (lambda (elem)
     (if (funcall duplicate-p elem)
